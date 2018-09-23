@@ -1,0 +1,5 @@
+Pkg.add("ForwardDiff")
+Pkg.add("Distributions")
+Pkg.add("ProgressMeter")
+Pkg.add("RigidBodyDynamics")
+Pkg.add("PyCall")

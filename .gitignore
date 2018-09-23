@@ -1,0 +1,8 @@
+__pycache__/
+logs/
+tmp/
+*.png
+*.pyc
+*.pdf
+.vscode/
+*.csv

@@ -1,0 +1,75 @@
+{
+    "paths": {
+        "training": "data/",
+        "models": "models/trained",
+        "tmp": "tmp/",
+        "figs": "analysis/figures"
+    },
+    "simulation": {
+        "system": "2dof",
+        "dof": 2,
+        "u_max": 0.5,
+        "mode": "time",
+        "samples": 40000,
+        "dt": 0.01,
+        "load": true,
+        "split": 0.2
+    },
+    "cleaner": {
+        "threshold": 0.15,
+        "percentage": 0.2
+    },
+    "planner": {
+        "debug": false,
+        "plotting": true,
+        "runs": 1,
+        "goal_bias": 15,
+        "threshold": 0.15,
+        "goal_noise_var": 1.571,
+        "reachability": 0.3,
+        "max_nodes": 1000
+    },
+    "model": {
+        "save": true,
+        "load": true,
+        "use": "clsgan",
+        "clean": false,
+        "knn": {
+            "structure": {
+                "input_size": 4,
+                "label_size": 4,
+                "latent_size": 2,
+                "n_neighbors": 3,
+                "weights": "distance",
+                "algorithm": "auto",
+                "leaf_size": 10,
+                "metric": "minkowski"
+            },
+            "training": {}
+        },
+        "clsgan": {
+            "structure": {
+                "input_size": 6,
+                "label_size": 8,
+                "latent_size": 32,
+                "layers": {
+                    "g": [
+                        256,
+                        256,
+                        256
+                    ],
+                    "d": [
+                        256,
+                        256,
+                        256
+                    ]
+                }
+            },
+            "training": {
+                "batch_size": 100,
+                "epochs": 30000,
+                "d_steps": 1
+            }
+        }
+    }
+}
