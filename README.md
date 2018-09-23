@@ -15,7 +15,7 @@ For inquiries regarding the code, please contact Nick Tsutsunava or open an Gith
 ## Getting started
 1. If you have access to the repo, clone it: `git clone https://github.com/ortix/generative-colearn.git`
 2. Ensure your current working directory is the location of this file: `cd generative-colearn`
-3. Install the required pip packages: `pip install -r requirements.txt`
+3. Install the required pip packages: `pip install -r requirements.txt`. If you have a GPU you can change the `tensorflow` entry to `tensorflow-gpu` in `requirements.txt`.
 4. Download [Julia 0.6.4](https://julialang-s3.julialang.org/bin/linux/x64/0.6/julia-0.6.4-linux-x86_64.tar.gz) and make sure the extracted `bin/` is in your `PATH`.
 5. Download the generated data set for the planar arm [here](https://drive.google.com/open?id=1rzXIwWz_cNUrBcqqu6b71KdswLah5bXD) and place it in the `data` folder. Make sure it's named `2dof_time.csv`.
 6. Run `python main.py`
