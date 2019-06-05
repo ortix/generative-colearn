@@ -2,15 +2,13 @@ import os
 
 import numpy as np
 import pandas as pd
-from sklearn import preprocessing
 
 from settings import settings as cfg
 from data.cleaner import Cleaner
 
 
 # Class is instantiated at the bottom!
-class DataLoader():
-
+class DataLoader:
     def __init__(self, load=True):
         self.training_data = []
         self.training_labels = []
@@ -35,9 +33,9 @@ class DataLoader():
         return None
 
     def next_batch(self, batch_size, test=False):
-        '''
+        """
         Return a total of `num` random samples and labels. 
-        '''
+        """
         if test:
             data = self.test_data
             labels = self.test_labels
@@ -60,15 +58,15 @@ class DataLoader():
         self.training_labels = labels
 
     def training_set(self):
-        '''
+        """
         Returns a list of training data and labels
-        '''
+        """
         return self.training_data, self.training_labels
 
     def test_set(self):
-        '''
+        """
         Returns a list of test data and labels
-        '''
+        """
         return self.test_data, self.test_labels
 
     def _clean(self, data, labels):
@@ -104,33 +102,47 @@ class DataLoader():
 
     def _save_clean(self, data, labels, clean=False):
         # Quick and dirty key generation
-        n_states = int(labels.shape[1]/4)
+        n_states = int(labels.shape[1] / 4)
         m_keys = ["theta0", "omega0", "theta1", "omega1", "lambda", "mu"]
         key_list = []
         for _, key in enumerate(m_keys):
-            key_list.append(["{}{}".format(key, i) for i in range(1, n_states+1)])
+            key_list.append(["{}{}".format(key, i) for i in range(1, n_states + 1)])
         keys = np.hstack([np.array(key_list).flat[:], ["cost", "t_f"]])
         keys_str = ", ".join(keys)
         # print(keys_str)
         current_dir = os.path.dirname(os.path.realpath(__file__))
-        filename = os.path.join(current_dir, "{}_{}_clean.csv".format(
-            self.cfg.simulation.system, self.cfg.simulation.mode))
+        filename = os.path.join(
+            current_dir,
+            "{}_{}_clean.csv".format(
+                self.cfg.simulation.system, self.cfg.simulation.mode
+            ),
+        )
         np.savetxt(
             filename,
             np.hstack([labels, data]),
-            delimiter=',',
+            delimiter=",",
             header=keys_str,
             comments="",
-            fmt="%f")
+            fmt="%f",
+        )
         pass
 
-    def _load(self, filename_override=None):
-        current_dir = os.path.dirname(os.path.realpath(__file__))
-        filename = os.path.join(current_dir, "{}_{}.csv".format(
-            self.cfg.simulation.system, self.cfg.simulation.mode))
+    def _determine_filename(self, filename_override):
+        if self.cfg.model.data_file is not None:
+            return self.cfg.model.data_file
 
-        filename_clean = os.path.join(current_dir, "{}_{}_clean.csv".format(
-            self.cfg.simulation.system, self.cfg.simulation.mode))
+        current_dir = os.path.dirname(os.path.realpath(__file__))
+        filename = os.path.join(
+            current_dir,
+            "{}_{}.csv".format(self.cfg.simulation.system, self.cfg.simulation.mode),
+        )
+
+        filename_clean = os.path.join(
+            current_dir,
+            "{}_{}_clean.csv".format(
+                self.cfg.simulation.system, self.cfg.simulation.mode
+            ),
+        )
         self.clean_available = os.path.isfile(filename_clean)
 
         if self.cfg.model.clean and self.clean_available and self.cfg.simulation.load:
@@ -138,17 +150,24 @@ class DataLoader():
         if filename_override is not None:
             print("Filename override: {}".format(filename_override))
             filename = os.path.join(current_dir, filename_override)
+
+        return filename
+
+    def _load(self, filename_override=None):
+        filename = self._determine_filename(filename_override)
         try:
             df = pd.read_csv(filename)
             print("Loaded {}".format(filename))
         except FileNotFoundError:
-            raise ValueError("Could not load {}. Going to generate it!".format(filename))
+            raise ValueError(
+                "Could not load {}. Going to generate it!".format(filename)
+            )
         else:
             return df
 
     def _split(self, data, labels):
 
-        split_n = int(self.cfg.simulation.split*data.shape[0])
+        split_n = int(self.cfg.simulation.split * data.shape[0])
         self.training_data = data[split_n:, :]
         self.training_labels = labels[split_n:, :]
 

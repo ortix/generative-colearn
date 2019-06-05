@@ -8,19 +8,19 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import tensorflow as tf
-from munch import munchify
-from scipy.stats import norm
-from tqdm import tqdm
-
 from analysis.model import ModelAnalysis
 from data.loader import loader as load
+from munch import munchify
 from planner.node_validator import NodeValidator
 from planner.rrt import RRT
+from scipy.stats import norm
+from settings import settings
 from simulation.pendulum import Pendulum
 from simulation.robot import Robot
+from tqdm import tqdm
 from utils.helpers import *  # probably not so smart
 from utils.logger import logger
-from settings import settings
+
 cfg = settings()
 
 
@@ -37,10 +37,7 @@ class DeepRRT:
         self.clean = "clean" if cfg.model.clean else "dirty"
         self.run_path = None
 
-        if self.system == "pendulum":
-            self.sim = Pendulum(**cfg.simulation)
-        else:
-            self.sim = Robot(**cfg.simulation)
+        self.load_system(cfg)
 
         self.planner = RRT(**cfg.planner)
 
@@ -48,6 +45,17 @@ class DeepRRT:
         self.model = get_model(self.model_name)(**cfg.model[self.model_name].structure)
         self.trainer = get_trainer(self.model_name)(self.model)
 
+        return None
+
+    def load_system(self, cfg):
+
+        if cfg.model.train_only:
+            return None
+
+        if self.system == "pendulum":
+            self.sim = Pendulum(**cfg.simulation)
+        else:
+            self.sim = Robot(**cfg.simulation)
         return None
 
     def load_data(self):
@@ -63,8 +71,7 @@ class DeepRRT:
         print("Generating data. Mode: {}".format(self.mode))
 
         # Run the simulation and get the training data with labels
-        self.sim.simulate(cfg.simulation.samples,
-                          cfg.simulation.dt)
+        self.sim.simulate(cfg.simulation.samples, cfg.simulation.dt)
         self.sim.save(cfg.paths.training)
         if not self.load_data():
             raise ValueError("Can not generate or load data")
@@ -75,19 +82,21 @@ class DeepRRT:
         # node we want to connect to is reachable (model has seen before)
         d_max = cfg.planner.reachability
         if cfg.planner.reachability == -1:
-            validator = NodeValidator(load.training_labels, d_max, gan_model=self.trainer.get_model())
+            validator = NodeValidator(
+                load.training_labels, d_max, gan_model=self.trainer.get_model()
+            )
         else:
             validator = NodeValidator(load.training_labels, d_max)
 
         # Define initial and final state for n-dof system
         n_dof = cfg.simulation.dof
 
-        s0 = [-0.25*np.pi, 0*np.pi, 0.0, 0.0]
-        s1 = [0.25*np.pi, 0*np.pi, 0.0, 0.0]
+        s0 = [-0.25 * np.pi, 0 * np.pi, 0.0, 0.0]
+        s1 = [0.25 * np.pi, 0 * np.pi, 0.0, 0.0]
 
         if n_dof == 1:
-            s0 = np.hstack([-np.pi*np.ones((n_dof,)), np.zeros((n_dof,))])
-            s1 = np.zeros((n_dof*2,))
+            s0 = np.hstack([-np.pi * np.ones((n_dof,)), np.zeros((n_dof,))])
+            s1 = np.zeros((n_dof * 2,))
 
         self.planner.set_states(s0, s1)
         self.planner.set_predictor(self.trainer.get_model())
@@ -96,7 +105,9 @@ class DeepRRT:
 
         n = cfg.planner.runs
         path = self.planner.plan(n, logdir=self.run_path)
-        flat_path = np.array([state for trajectory in path[::-1] for state in trajectory])
+        flat_path = np.array(
+            [state for trajectory in path[::-1] for state in trajectory]
+        )
         np.savetxt(os.path.join(self.run_path, "path_0.txt"), flat_path)
         return None
 
@@ -122,7 +133,10 @@ class DeepRRT:
             return False
         model_weights = os.path.join(
             cfg.paths.models,
-            "{}_{}_{}_{}_weights.h5".format(self.model_name, self.system, self.mode, self.clean))
+            "{}_{}_{}_{}_weights.h5".format(
+                self.model_name, self.system, self.mode, self.clean
+            ),
+        )
 
         if not self.model_name:
             print("No models found to load...")
@@ -142,12 +156,16 @@ class DeepRRT:
         if cfg.model.save:
             decoder = self.trainer.get_model()
             model_file = os.path.join(cfg.paths.models, self.model_name)
-            decoder.save_weights("{}_{}_{}_{}_weights.h5".format(model_file, self.system, self.mode, self.clean))
+            decoder.save_weights(
+                "{}_{}_{}_{}_weights.h5".format(
+                    model_file, self.system, self.mode, self.clean
+                )
+            )
         return None
 
     def write_logs(self):
-        filename = os.path.join(self.run_path, 'log.json')
-        with open(filename, 'w') as outfile:
+        filename = os.path.join(self.run_path, "log.json")
+        with open(filename, "w") as outfile:
             json.dump(logger, outfile, indent=4)
 
         # We copy the settings file to the run path as well for reference
@@ -159,17 +177,17 @@ class DeepRRT:
         return None
 
     def clean_up_irq(self):
-        '''
+        """
         Clean up if interrupted
-        '''
+        """
         print("Removing dir: {}".format(self.run_path))
         shutil.rmtree(self.run_path)
         exit()
 
     def clean_up(self):
-        '''
+        """
         General cleanup routine
-        '''
+        """
         # Clear logger after each run
         logger.clear()
 
@@ -203,6 +221,8 @@ class DeepRRT:
             if not cfg.model.load or not self.load_model():
                 self.train_model()
 
+            if cfg.model.train_only:
+                return None
             self.evaluate_model()
             self.plan_path()
             self.write_logs()

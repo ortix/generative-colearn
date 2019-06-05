@@ -1,0 +1,19 @@
+name = "ColearnGenerate"
+uuid = "fb41beae-5146-11e9-363d-af81a842e8bc"
+authors = ["Wouter <wjwolfslag@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+DiffResults = "163ba53b-c6d8-5494-b064-1a9d43ac40c5"
+DifferentialEquations = "0c46a032-eb83-5123-abaf-570d42b7fbaa"
+Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
+ForwardDiff = "f6369f11-7733-5829-9624-2563aa707210"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+MeshCat = "283c5d60-a78f-5afe-a0af-af636b173e11"
+MeshCatMechanisms = "6ad125db-dd91-5488-b820-c1df6aab299d"
+Polynomials = "f27b6e38-b328-58d1-80ce-0feddd5e7a45"
+PyCall = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+RigidBodyDynamics = "366cf18f-59d5-5db9-a4de-86a9f6786172"

@@ -1,0 +1,39 @@
+{
+  "simulation": {
+    "system": "3dof",
+    "dof": 3,
+    "u_max": 2.0,
+    "mode": "time",
+    "load": true,
+    "split": 0.2,
+    "dt":0.001
+  },
+  "planner": {
+    "debug": false,
+    "plotting": true,
+    "goal_noise": 0,
+    "reachability": -1
+  },
+  "model": {
+    "save": true,
+    "load": true,
+    "use": "clsgan",
+    "clean": false,
+    "clsgan": {
+      "structure": {
+        "input_size": 8,
+        "label_size": 12,
+        "latent_size": 32,
+        "layers": {
+          "g": [512, 512, 512],
+          "d": [256, 256, 256]
+        }
+      },
+      "training": {
+        "batch_size": 1000,
+        "epochs": 300,
+        "d_steps": 1
+      }
+    }
+  }
+}

@@ -12,9 +12,9 @@ matplotlib.rcParams['ps.fonttype'] = 42
 
 # Parse arguments
 parser = argparse.ArgumentParser()
-parser.add_argument('--epochs', dest="epochs", help="Amount of epochs. Default 1", type=int, default=1)
-parser.add_argument("--experiment", dest="experiment", default="2dof",
-                    help="Use: pendulum, 2dof")
+parser.add_argument('--epochs', dest="epochs", help="Amount of experimental epochs. Default 1", type=int, default=1)
+parser.add_argument("--experiment", dest="experiment", default="3dof",
+                    help="Use: pendulum, 2dof, 3dof")
 parser.add_argument("--visualize", dest="visualize", action="store_true",
                     help="Visualize the path in urdf-viz")
 parser.add_argument("--reach", dest="reachability", type=float,
@@ -26,6 +26,11 @@ parser.add_argument('--folder', dest="folder", default="results",
                     help="Subfolder within tmp to store the results in. Usefull for separating experiments")
 parser.add_argument('--post-process', dest="post_process", action="store_true",
                     help="Post process the results from folder. Run the experiments first!")
+parser.add_argument('--gan-epochs', dest="gan_epochs", help="amount of epochs for GAN", type=int)
+parser.add_argument('--gan-batch-size', dest="gan_batch_size", help="batch size for GAN", type=int)
+parser.add_argument('--data-file', dest="data_file", help="location of training data file")
+parser.add_argument('--train-only', dest="train_only", action="store_true", default=False)
+
 args = parser.parse_args()
 cfg = settings(args.experiment)
 
@@ -33,6 +38,10 @@ cfg = settings(args.experiment)
 cfg.planner.runs = args.runs or cfg.planner.runs
 cfg.model.use = args.model
 cfg.planner.reachability = args.reachability or cfg.planner.reachability
+cfg.model.data_file = args.data_file or None
+cfg.model.train_only = args.train_only or None
+cfg.model.clsgan.training.batch_size = args.gan_batch_size or cfg.model.clsgan.training.batch_size
+cfg.model.clsgan.training.epochs = args.gan_epochs or cfg.model.clsgan.training.epochs
 
 # Post process the results and exit the main application
 if args.post_process:
@@ -43,7 +52,7 @@ if args.post_process:
 # If we're not post processing, run experiments and move results to folder
 from deep_rrt import DeepRRT
 for exp_n in range(args.epochs):
-    deepRRT = DeepRRT(exp_n+1)
+    deepRRT = DeepRRT(exp_n + 1)
     deepRRT.run()
 
     # Move experiment to a separate folder
