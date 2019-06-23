@@ -1,45 +1,39 @@
 {
-    "simulation": {
-        "system": "2dof",
-        "dof": 2,
-        "mode": "time",
-        "load": true,
-        "split": 0.2
-    },
-    "planner": {
-        "debug": false,
-        "plotting": true,
-        "goal_noise": 0,
-        "reachability": -1
-    },
-    "model": {
-        "save": true,
-        "load": true,
-        "use": "clsgan",
-        "clean": false,
-        "clsgan": {
-            "structure": {
-                "input_size": 6,
-                "label_size": 8,
-                "latent_size": 32,
-                "layers": {
-                    "g": [
-                        256,
-                        256,
-                        256
-                    ],
-                    "d": [
-                        256,
-                        256,
-                        256
-                    ]
-                }
-            },
-            "training": {
-                "batch_size": 100,
-                "epochs": 30000,
-                "d_steps": 1
-            }
+  "simulation": {
+    "system": "2dof",
+    "dof": 2,
+    "mode": "time",
+    "load": true,
+    "split": 0.2
+  },
+  "planner": {
+    "debug": false,
+    "plotting": true,
+    "goal_noise": 0,
+    "reachability": -1,
+    "state_i": [-0.785, 0, -0.785, 0],
+    "state_f": [0.785, 0, 0.785, 0]
+  },
+  "model": {
+    "save": true,
+    "load": true,
+    "use": "clsgan",
+    "clean": false,
+    "clsgan": {
+      "structure": {
+        "input_size": 6,
+        "label_size": 8,
+        "latent_size": 32,
+        "layers": {
+          "g": [256, 256, 256],
+          "d": [256, 256, 256]
         }
+      },
+      "training": {
+        "batch_size": 100,
+        "epochs": 30000,
+        "d_steps": 1
+      }
     }
+  }
 }

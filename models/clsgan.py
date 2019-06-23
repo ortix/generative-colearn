@@ -29,7 +29,7 @@ class CLSGAN:
             tf.float64, shape=[None, self.latent_size], name="noise"
         )
 
-        self.initializer = tf.contrib.layers.xavier_initializer()
+        self.initializer = tf.keras.initializers.glorot_uniform()
 
         # Build network
         self.G_sample = self.build_generator(self.noise, self.labels)

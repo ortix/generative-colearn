@@ -89,14 +89,9 @@ class DeepRRT:
             validator = NodeValidator(load.training_labels, d_max)
 
         # Define initial and final state for n-dof system
-        n_dof = cfg.simulation.dof
 
-        s0 = [-0.25 * np.pi, 0 * np.pi, 0.0, 0.0]
-        s1 = [0.25 * np.pi, 0 * np.pi, 0.0, 0.0]
-
-        if n_dof == 1:
-            s0 = np.hstack([-np.pi * np.ones((n_dof,)), np.zeros((n_dof,))])
-            s1 = np.zeros((n_dof * 2,))
+        s0 = cfg.planner.state_i
+        s1 = cfg.planner.state_f
 
         self.planner.set_states(s0, s1)
         self.planner.set_predictor(self.trainer.get_model())

@@ -250,6 +250,7 @@ class ModelAnalysis:
         dof = self.cfg.simulation.dof
         for i in tqdm(range(m * n)):
             state, _ = self.sim.simulate_steer(states[0][i, :], costates_hat[i, :])
+            print(state)
             theta_hat.append(state[:dof])
             omega_hat.append(state[dof:])
 
