@@ -21,6 +21,10 @@
     "load": true,
     "use": "clsgan",
     "clean": false,
+    "nongan": {
+      "structure": {},
+      "training": {}
+    },
     "clsgan": {
       "structure": {
         "input_size": 8,

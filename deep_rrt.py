@@ -112,7 +112,6 @@ class DeepRRT:
         """
         print("Evaluating model")
         model = self.trainer.get_model()
-
         analyzer = ModelAnalysis(model, self.sim)
 
         analyzer.set_data(load.test_data, load.test_labels)

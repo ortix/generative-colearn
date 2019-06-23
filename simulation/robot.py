@@ -14,7 +14,7 @@ class Robot:
         o_bounds = np.tile([-1, 1], (dof, 1))
         self.sampling_bounds = np.vstack([t_bounds, o_bounds])
 
-        self.sim = self.init_julia()
+        # self.sim = self.init_julia()
         return None
 
     def init_julia(self):

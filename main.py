@@ -21,7 +21,7 @@ parser.add_argument("--reach", dest="reachability", type=float,
                     help="Reachability value. -1 for GAN discriminator")
 parser.add_argument("--runs", dest="runs", help="Amount of RRT runs", type=int)
 parser.add_argument('--learner', dest="model", help="Which learning algorithm to use",
-                    choices=["clsgan", "knn"], default="clsgan")
+                    choices=["clsgan", "knn", "nongan"], default="clsgan")
 parser.add_argument('--folder', dest="folder", default="results",
                     help="Subfolder within tmp to store the results in. Usefull for separating experiments")
 parser.add_argument('--post-process', dest="post_process", action="store_true",

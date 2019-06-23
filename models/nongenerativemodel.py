@@ -24,7 +24,7 @@ class NonGenerativeModel:
 
     def _setConfig(self, config):
         if config is None:
-            self.dof = 1
+            self.dof = 3
             self.layerSize = 32
             self.maxTime = 2.0
             self.maxCost = 2.0
