@@ -22,7 +22,15 @@
     "use": "clsgan",
     "clean": false,
     "nongan": {
-      "structure": {},
+      "structure": {
+        "layerSize": 256,
+        "numLayers": 3,
+        "maxTime": 1.0,
+        "maxCost": 1.0,
+        "maxStates": [1.6, 0.8, 0.8, 1.0, 1.0, 1.0],
+        "epochs": 64,
+        "batch_size": 2048
+    },
       "training": {}
     },
     "clsgan": {

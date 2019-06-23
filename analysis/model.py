@@ -403,7 +403,7 @@ class ModelAnalysis:
         self.generate_samples()
         self.plot_costate_concentration()
         self.plot_knn_spread()
-        self.plot_costate_proximity()
+        # self.plot_costate_proximity()
         self.plot_generated_distribution()
         self.plot_cost_qq()
         # self.plot_trajectories()
@@ -413,7 +413,7 @@ class ModelAnalysis:
         # Run last, slow
         # self.costate_error()
         # self.torque_switch_factor()
-        self.error_rate()
+        # self.error_rate()
         plt.close("all")
         return None
 

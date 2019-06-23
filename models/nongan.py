@@ -1,26 +1,25 @@
 from models.nongenerativemodel import NonGenerativeModel
+from settings import settings
 import numpy as np
+
+cfg = settings()
 
 
 class NONGAN:
-    def __init__(self):
-        config = {
-            "dof": 3,
-            "layerSize": 256,
-            "numLayers": 3,
-            "maxTime": 1.0,
-            "maxCost": 1.0,
-            "maxStates": [1.6, 0.8, 0.8, 1.0, 1.0, 1.0],
-            "epochs": 1,
-            "batch_size": 2048,
-        }
-        self.model = NonGenerativeModel(config)
+    def __init__(self, **kwargs):
+        kwargs["dof"] = cfg.simulation.dof
+        self.model = NonGenerativeModel(kwargs)
 
     def predict(self, labels):
         initial_state, final_state = np.split(labels, 2, axis=1)
         costate, time, cost, reachable = self.model.predict(initial_state, final_state)
 
         return np.hstack([costate, time, cost])
+
+    def discriminate(self, labels):
+        initial_state, final_state = np.split(labels, 2, axis=1)
+        _, _, _, reachable = self.model.predict(initial_state, final_state)
+        return reachable
 
     def save_weights(self, path):
         self.model.save(path)
