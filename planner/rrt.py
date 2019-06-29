@@ -137,7 +137,6 @@ class RRT:
         u_min = u[local_idx, :]
         idx = valid_idx[local_idx]
         current = self.node_list[idx].state
-
         final_state, trajectory = self._sim.simulate_steer(current, u_min)
 
         return final_state, idx, trajectory

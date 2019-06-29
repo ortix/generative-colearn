@@ -48,23 +48,22 @@ class Robot:
         return
 
     def simulate_steer_full(self, s0, u, dt=0.01):
-        """
-        Returns theta, omega, lambda, mu, cost
-        """
 
         # For now we don't use dt.. maybe we will incorporate it later
         # The julia simulation takes an array containing the current state
         # and the initial costates. In the legacy code the u variable also
         # contains cost and t_f, we remove that.
 
-        _, state_trajectory = self.sim(np.hstack([s0, u[:-2]]), u[-1])
+        time_trajectory, state_trajectory = self.sim(np.hstack([s0, u[:-2]]), u[-1])
         return state_trajectory[-1], state_trajectory
 
     def simulate_steer(self, s0, u, dt=0.01):
-        return self.simulate_steer_full(s0, u)
-        # theta, omega, _, _, _ = final_state
-        # theta_traj, omega_traj, _, _, _ = trajectory
-        # return np.hstack([theta, omega]), np.hstack([theta_traj, omega_traj])
+        final_state, trajectory = self.simulate_steer_full(s0, u)
+        theta = final_state[: self.dof]
+        omega = final_state[self.dof:(2*self.dof)]
+        theta_traj = [state[:self.dof] for state in trajectory]
+        omega_traj = [state[self.dof:2*self.dof] for state in trajectory]
+        return np.hstack([theta, omega]), np.hstack([theta_traj, omega_traj])
 
     def get_eom(self):
         pass
@@ -90,7 +89,7 @@ class Robot:
 
 if __name__ == "__main__":
     r = Robot(3, "time")
-    t, q = r.sim([0.0] * 12, 0.95)
+    t, q = r.sim(np.array([0.0] * 12), 0.95)
 
     print(t)
     print(q)
