@@ -18,7 +18,7 @@ end
 
 function simulate(eom, theta0, omega0, lambda0, mu0, dt, steps)
 
-    theta, omega, lambda, mu = [repmat(x.', steps) for x in [theta0, omega0, lambda0, mu0]]
+    theta, omega, lambda, mu = [repeat(transpose(x), steps) for x in [theta0, omega0, lambda0, mu0]]
     cost = zeros(eltype(theta), steps)
     simulate!(eom, theta, omega, lambda, mu, cost, dt, steps)
     

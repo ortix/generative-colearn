@@ -1,6 +1,7 @@
 using ForwardDiff
 using Distributions
 using ProgressMeter
+using LinearAlgebra
 push!(LOAD_PATH, joinpath(dirname(@__FILE__), "eom"))
 using RobotEOM
 include("simulate.jl")
@@ -63,7 +64,7 @@ function timeOptimalFullStateSampling(mechanism::Mechanisms,
         else
             muHat = rand(Normal(), n)
         end
-        coLength = norm(vcat(lambdaHat, muHat))
+        coLength = LinearAlgebra.norm(vcat(lambdaHat, muHat))
         lambdaHat = lambdaHat / coLength
         muHat = muHat / coLength
         H1 = timeOptimalHamiltonian(theta, omega, lambdaHat, muHat, mechanism)

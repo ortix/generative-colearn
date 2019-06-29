@@ -32,6 +32,7 @@ class ModelAnalysis:
 
     def generate_samples(self):
         print("Generating samples...")
+        print(self.model)
         self.samples = self.model.predict(self.labels)
         return None
 
@@ -414,6 +415,7 @@ class ModelAnalysis:
         # self.costate_error()
         # self.torque_switch_factor()
         # self.error_rate()
+
         plt.close("all")
         return None
 

@@ -13,7 +13,6 @@ class NONGAN:
     def predict(self, labels):
         initial_state, final_state = np.split(labels, 2, axis=1)
         costate, time, cost, reachable = self.model.predict(initial_state, final_state)
-
         return np.hstack([costate, time, cost])
 
     def discriminate(self, labels):

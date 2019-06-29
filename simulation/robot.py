@@ -30,9 +30,16 @@ class Robot:
         Main.eval('include("{}/n-dof/ColearnGenerate.jl")'.format(current_dir))
         print("Imported ColearnGenerate")
 
-        urdf = os.path.join(current_dir, "n-dof", "urdf", "kuka_iiwa", "model3DOF.urdf")
+        if self.dof == 3:
 
-        return Main.ColearnGenerate.standardTimeOptimalSim(urdf, [2.0, 2.0, 2.0])
+            urdf = os.path.join(current_dir, "n-dof", "urdf", "kuka_iiwa", "model3DOF.urdf")
+            return Main.ColearnGenerate.standardTimeOptimalSim(urdf, [2.0, 2.0, 2.0])
+        else:
+            print("WARNING: the URDF in simulation might not match the dynamics of the 2-dof manipulator used in training")
+            urdf = os.path.join(current_dir, "n-dof", "urdf", "2dof.urdf")
+            return Main.ColearnGenerate.standardTimeOptimalSim(urdf, [1.0, 1.0])
+
+
 
     def set_training_data_dir(self, path):
         """ 
@@ -54,7 +61,8 @@ class Robot:
         # and the initial costates. In the legacy code the u variable also
         # contains cost and t_f, we remove that.
 
-        time_trajectory, state_trajectory = self.sim(np.hstack([s0, u[:-2]]), u[-1])
+        final_time = np.float64(u[-1])
+        time_trajectory, state_trajectory = self.sim(np.hstack([s0, u[:-2]]), final_time)
         return state_trajectory[-1], state_trajectory
 
     def simulate_steer(self, s0, u, dt=0.01):
@@ -89,8 +97,5 @@ class Robot:
 
 if __name__ == "__main__":
     r = Robot(3, "time")
-    t, q = r.sim(np.array([0.0] * 12), 0.95)
-
-    print(t)
-    print(q)
-    print(q[-1])
+    time, states = r.simulate_steer_full(np.array([0.1]*6), np.array([0.3]*8))
+    print(np.stack(states, axis=0))

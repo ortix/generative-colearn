@@ -10,7 +10,9 @@ class NonGenerativeModel:
         self._makeLearningModel()
 
     def predict(self, initial_state, final_state):
-        return self.predictionModel.predict([initial_state, final_state])
+        prediction = self.predictionModel.predict([initial_state, final_state])
+        costate, time, cost, reachable = prediction
+        return costate, time, cost, reachable
 
     def train(self, data):
         self.learningModel.fit(data, epochs= self.epochs, batch_size=self.batch_size) 

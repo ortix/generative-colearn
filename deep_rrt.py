@@ -33,6 +33,7 @@ class DeepRRT:
         # Local settings
         self.system = cfg.simulation.system
         self.model_name = cfg.model.use
+        print("STARTING SIMULATIONS USING MODEL: ", self.model_name)
         self.mode = cfg.simulation.mode
         self.clean = "clean" if cfg.model.clean else "dirty"
         self.run_path = None

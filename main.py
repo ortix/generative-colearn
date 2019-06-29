@@ -13,7 +13,7 @@ matplotlib.rcParams['ps.fonttype'] = 42
 # Parse arguments
 parser = argparse.ArgumentParser()
 parser.add_argument('--epochs', dest="epochs", help="Amount of experimental epochs. Default 1", type=int, default=1)
-parser.add_argument("--experiment", dest="experiment", default="3dof",
+parser.add_argument("--experiment", dest="experiment", default="2dof",
                     help="Use: pendulum, 2dof, 3dof")
 parser.add_argument("--visualize", dest="visualize", action="store_true",
                     help="Visualize the path in urdf-viz")
@@ -36,7 +36,7 @@ cfg = settings(args.experiment)
 
 # Map runtime settings
 cfg.planner.runs = args.runs or cfg.planner.runs
-cfg.model.use = args.model
+cfg.model.use = args.model # this is evil, you override the settings from the settings file when using default
 cfg.planner.reachability = args.reachability or cfg.planner.reachability
 cfg.model.data_file = args.data_file or None
 cfg.model.train_only = args.train_only or None

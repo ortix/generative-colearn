@@ -17,20 +17,22 @@
   "model": {
     "save": true,
     "load": true,
-    "use": "nongan",
+    "use": "clsgan",
     "clean": false,
     "nongan": {
       "structure": {
-        "dof": 2,
-        "layerSize": 256,
-        "numLayers": 3,
-        "maxTime": 2.0,
-        "maxCost": 2.0,
-        "maxStates": 3.0,
-        "epochs": 50,
-        "batch_size": 256
+        "input_size": 6,
+        "label_size": 8,
+        "latent_size": 32,
+        "layers": {
+          "g": [256, 256, 256],
+          "d": [256, 256, 256]
+        }
       },
       "training": {
+        "batch_size": 256,
+        "epochs": 100000,
+        "d_steps": 1
       }
     }
   }
