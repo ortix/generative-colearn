@@ -16,7 +16,7 @@
   },
   "model": {
     "save": true,
-    "load": true,
+    "load": false,
     "use": "clsgan",
     "clean": false,
     "clsgan": {

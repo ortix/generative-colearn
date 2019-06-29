@@ -412,7 +412,7 @@ class ModelAnalysis:
         # Run last, slow
         # self.costate_error()
         # self.torque_switch_factor()
-        self.error_rate()
+        # self.error_rate()
         plt.close("all")
         return None
 
