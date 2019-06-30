@@ -9,6 +9,10 @@ from settings import settings as cfg
 from sklearn.metrics import mean_squared_error as mse
 from utils.logger import logger
 
+import sys
+sys.path.append("..")
+from planner.node_validator import NodeValidator
+
 
 class ModelAnalysis:
     def __init__(self, model, sim):
@@ -400,6 +404,40 @@ class ModelAnalysis:
         costates = np.split(self.data[idx, : (n_dof * 2)], 2, axis=1)
         costates_hat = np.split(self.samples[idx, : (n_dof * 2)], 2, axis=1)
 
+    def node_validation(self, d_max=0.3):
+        validator = NodeValidator(self.labels, d_max, gan_model=self.model)
+        initial_states, final_states = np.split(self.labels, 2, axis=1)
+        initial_states = initial_states[0:2000, :]
+        final_states = final_states[0:2000, :]
+
+        num_samples = initial_states.shape[0]
+
+        correct_valid = 0
+        incorrect_valid = 0 
+        correct_invalid = 0
+        incorrect_invalid = 0
+
+        for target in tqdm(final_states): 
+            valid, valid_neural = validator.validation_analysis(initial_states, target, d_max) 
+            valid = set(valid)
+            valid_neural = set(valid_neural)
+            invalid = set(range(num_samples)).difference(valid)
+            invalid_neural = set(range(num_samples)).difference(valid_neural)
+
+            correct_valid +=  len(valid.intersection(valid_neural))
+            incorrect_valid +=  len(invalid.intersection(valid_neural))
+            correct_invalid +=   len(invalid.intersection(invalid_neural))
+            incorrect_invalid +=  len(valid.intersection(invalid_neural))
+        
+        
+        print("==================")
+        print("the rate of correctly identified valid samples is: ", correct_valid/(num_samples**2))
+        print("the rate of samples that are incorrectly identified as valid is: ", incorrect_valid/(num_samples**2) )
+        print("the rate of correctly identified invalid samples is: ", correct_invalid/(num_samples**2))
+        print("the rate of samples that are incorrectly identified as invalid is: ", incorrect_invalid/(num_samples**2))
+        print("==================")  
+        
+
     def run(self):
         self.generate_samples()
         self.plot_costate_concentration()
@@ -415,6 +453,7 @@ class ModelAnalysis:
         # self.costate_error()
         # self.torque_switch_factor()
         # self.error_rate()
+        self.node_validation(d_max=0.3)
 
         plt.close("all")
         return None

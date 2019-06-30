@@ -13,7 +13,7 @@ matplotlib.rcParams['ps.fonttype'] = 42
 # Parse arguments
 parser = argparse.ArgumentParser()
 parser.add_argument('--epochs', dest="epochs", help="Amount of experimental epochs. Default 1", type=int, default=1)
-parser.add_argument("--experiment", dest="experiment", default="2dof",
+parser.add_argument("--experiment", dest="experiment", default="pendulum",
                     help="Use: pendulum, 2dof, 3dof")
 parser.add_argument("--visualize", dest="visualize", action="store_true",
                     help="Visualize the path in urdf-viz")

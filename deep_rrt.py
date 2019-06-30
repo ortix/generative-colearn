@@ -17,6 +17,7 @@ from scipy.stats import norm
 from settings import settings
 from simulation.pendulum import Pendulum
 from simulation.robot import Robot
+from simulation.robot_2dof import Robot as Robot2Dof
 from tqdm import tqdm
 from utils.helpers import *  # probably not so smart
 from utils.logger import logger
@@ -55,6 +56,9 @@ class DeepRRT:
 
         if self.system == "pendulum":
             self.sim = Pendulum(**cfg.simulation)
+        elif self.system == "2dof":
+            print("Using old simulation for 2dof")
+            self.sim =  Robot2Dof(**cfg.simulation)
         else:
             self.sim = Robot(**cfg.simulation)
         return None

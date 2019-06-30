@@ -19,11 +19,31 @@ class NodeValidator():
         Return the indices of nodes that are valid to expand from. Only trajectories
         that have been seen during training (or similar) are valid.
         """
-        tiled = np.tile(random_state, (node_list.shape[0], 1))
         if self.gan_model is not None:
-            val = self.gan_model.discriminate(np.hstack([node_list, tiled]))
-            valid_idx = np.where(val.flatten() > 0)[0]
+            return self._validateNeural(node_list, random_state)
         else:
-            distances, idx = self.nb.kneighbors(np.hstack([node_list, tiled]), 1)
-            valid_idx = np.flatnonzero(distances < self.d_max)
+            return self._validateKNN(node_list, random_state)
+
+
+
+    def _validateKNN(self, node_list, random_state):
+        tiled = np.tile(random_state, (node_list.shape[0], 1))
+        distances, idx = self.nb.kneighbors(np.hstack([node_list, tiled]), 1)
+        valid_idx = np.flatnonzero(distances < self.d_max)
         return valid_idx
+
+    def _validateNeural(self, node_list, random_state):
+        tiled = np.tile(random_state, (node_list.shape[0], 1))
+        val = self.gan_model.discriminate(np.hstack([node_list, tiled]))
+        valid_idx = np.where(val.flatten() > 0)[0]
+        return valid_idx
+
+
+    def validation_analysis(self, node_list, random_state, knn_dmax):
+        dmax = self.d_max
+        self.d_max = knn_dmax  
+        valid_idx_knn = self._validateKNN(node_list, random_state)
+        self.d_max = dmax
+        valid_idx_neural = self._validateNeural(node_list, random_state)
+        return valid_idx_knn, valid_idx_neural
+

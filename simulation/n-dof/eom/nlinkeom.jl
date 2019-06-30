@@ -1,3 +1,4 @@
+using LinearAlgebra
 
 struct NLinkPlanarMechanism <: Mechanisms
     dof::Integer
@@ -64,7 +65,7 @@ struct NLinkPlanarMechanism <: Mechanisms
       m1[c1+1] = link_mass[n]
       n += 1
     end
-    return diagm(m1)
+    return LinearAlgebra.Diagonal(m1)
   end
   
   function tTM(jacobian, mechanism::NLinkPlanarMechanism)

@@ -4,6 +4,7 @@ module Dynamics
     push!(LOAD_PATH, joinpath(dirname(@__FILE__), "eom/"))
     using RobotEOM
     using ForwardDiff
+    using LinearAlgebra
 
     function mechanismEom(theta, omega, torque, mechanism::Mechanisms)
         M, bias = mechanismDynamicsTerms(theta, omega, mechanism)

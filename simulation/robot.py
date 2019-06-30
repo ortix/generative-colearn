@@ -31,7 +31,6 @@ class Robot:
         print("Imported ColearnGenerate")
 
         if self.dof == 3:
-
             urdf = os.path.join(current_dir, "n-dof", "urdf", "kuka_iiwa", "model3DOF.urdf")
             return Main.ColearnGenerate.standardTimeOptimalSim(urdf, [2.0, 2.0, 2.0])
         else:

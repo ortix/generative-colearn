@@ -17,7 +17,8 @@ class NONGAN:
 
     def discriminate(self, labels):
         initial_state, final_state = np.split(labels, 2, axis=1)
-        _, _, _, reachable = self.model.predict(initial_state, final_state)
+        _, _, _, prob_reachable = self.model.predict(initial_state, final_state)
+        reachable = (prob_reachable - 0.5)*2.0 # reschaling, for use in planner, which cuts off at 0.0, not 0.5
         return reachable
 
     def save_weights(self, path):
