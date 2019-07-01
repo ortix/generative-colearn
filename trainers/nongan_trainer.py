@@ -17,7 +17,7 @@ class NONGANTrainer(AbstractTrainer):
     def set_model_weights(self, path):
         self.network.model.load(path)
 
-    def train(self, data=None, labels=None):
+    def train(self, data=None, labels=None, **kwargs):
         dof = cfg.simulation.dof
 
         data = load.training_data

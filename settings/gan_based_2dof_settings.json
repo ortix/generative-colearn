@@ -18,7 +18,7 @@
     "save": true,
     "load": true,
     "clean": false,
-    "nongan": {
+    "clsgan": {
       "structure": {
         "input_size": 6,
         "label_size": 8,

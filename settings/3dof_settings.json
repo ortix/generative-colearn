@@ -9,7 +9,7 @@
     "dt": 0.001
   },
   "planner": {
-    "debug": true,
+    "debug": false,
     "plotting": true,
     "goal_noise": 0,
     "reachability": -1,
@@ -26,11 +26,12 @@
         "numLayers": 3,
         "maxTime": 1.0,
         "maxCost": 1.0,
-        "maxStates": [1.6, 0.8, 0.8, 1.0, 1.0, 1.0],
+        "maxStates": [1.6, 0.8, 0.8, 1.0, 1.0, 1.0]
+    },
+      "training": {
         "epochs": 64,
         "batch_size": 2048
-    },
-      "training": {}
+      }
     },
     "clsgan": {
       "structure": {
