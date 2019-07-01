@@ -9,17 +9,16 @@
     "dt": 0.001
   },
   "planner": {
-    "debug": false,
+    "debug": true,
     "plotting": true,
     "goal_noise": 0,
     "reachability": -1,
     "state_i": [0, 0, -0.785, 0, -0.785, 0],
-    "state_f": [1.57, 0, 0.785, 0, 0.785, 0]
+    "state_f": [0, 0, 0, 0, 0, 0]
   },
   "model": {
     "save": false,
     "load": true,
-    "use": "clsgan",
     "clean": false,
     "nongan": {
       "structure": {

@@ -24,15 +24,14 @@
         "plotting": true,
         "runs": 1,
         "goal_bias": 15,
-        "threshold": 0.15,
+        "threshold": 0.35,
         "goal_noise_var": 1.571,
         "reachability": 0.3,
-        "max_nodes": 1000
+        "max_nodes": 5000
     },
     "model": {
         "save": true,
         "load": true,
-        "use": "clsgan",
         "clean": false,
         "knn": {
             "structure": {

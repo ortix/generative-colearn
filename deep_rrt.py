@@ -86,12 +86,8 @@ class DeepRRT:
         # We can pass in a node validator with which we can check whether the
         # node we want to connect to is reachable (model has seen before)
         d_max = cfg.planner.reachability
-        if cfg.planner.reachability == -1:
-            validator = NodeValidator(
-                load.training_labels, d_max, gan_model=self.trainer.get_model()
-            )
-        else:
-            validator = NodeValidator(load.training_labels, d_max)
+        validator = NodeValidator(load.training_labels, d_max, gan_model=self.trainer.get_model())
+
 
         # Define initial and final state for n-dof system
 

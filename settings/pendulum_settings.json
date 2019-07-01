@@ -23,11 +23,27 @@
         "numLayers": 3,
         "maxTime": 2.0,
         "maxCost": 2.0,
-        "maxStates": 3.1415,
-        "epochs": 50,
-        "batch_size": 256
+        "maxStates": 3.1415
       },
       "training": {
+        "epochs": 50,
+        "batch_size": 256
+      }
+    },
+    "clsgan": {
+      "structure": {
+        "input_size": 4,
+        "label_size": 4,
+        "latent_size": 32,
+        "layers": {
+          "g": [32, 64, 128, 256, 512],
+          "d": [512, 256, 128, 64, 32]
+        }
+      },
+      "training": {
+        "batch_size": 100,
+        "epochs": 30000,
+        "d_steps": 1
       }
     }
   }

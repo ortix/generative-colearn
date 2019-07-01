@@ -37,7 +37,7 @@ class Pipeline():
         else:
             prefix = "{}_{}_*/log.json".format(model, clean)
 
-        if(model == "clsgan"):
+        if(model == "clsgan" or model == "nongan"):
             mode_n += model_offset
 
         # Some experiments are stored within a mode subdir e.g. during a sweep
@@ -125,7 +125,7 @@ class Pipeline():
                 data[key], data["mse_length"])).expandtabs(self.exp_tabs))
 
         # Print the statistic for the model
-        for key in ["proximity", "reachability"]:
+        for key in ["proximity"]:
             print("[{}]\t mu: {:.3f} \t std: {:.3f}".format(key,
                                                             np.mean(data[key]),
                                                             np.linalg.norm(data["{}_std".format(key)])
@@ -265,7 +265,7 @@ class Pipeline():
 
 def process(folder):
     print(folder)
-    for model in ["clsgan", "knn"]:
+    for model in ["clsgan", "knn", "nongan"]:
         print("\n --------Evaluation for {}----------".format(model))
         p = Pipeline()
         if not p.consolidate(model, mode_n=-1, model_offset=0, subfolder=[folder]):
@@ -278,20 +278,3 @@ def process(folder):
 
 if __name__ == "__main__":
     pass
-    # Generate boxplots for sweeps
-    # p = Pipeline()
-    # p.reachability_box_plot()
-    # p.reset()
-    # p.clean_sweep_stats()
-    # del p
-
-    # Compute stats
-    # for model in ["clsgan", "knn"]:
-    #     print("\n --------Evaluation for {}----------".format(model))
-    #     p = Pipeline()
-    #     if not p.consolidate(model, mode_n=-1, model_offset=0, subfolder=["experimental", "2dof_final_multi"]):
-    #         continue
-    #     p.print_mode()
-    #     p.compute_model_stats()
-    #     p.compute_rrt_stats()
-    #     del p
