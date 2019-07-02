@@ -13,8 +13,8 @@
     "plotting": true,
     "goal_noise": 0,
     "reachability": -1,
-    "state_i": [0, 0, -0.785, 0, -0.785, 0],
-    "state_f": [0, 0, 0, 0, 0, 0]
+    "state_i": [-1.4, 1.05, -1.4, 0, 0, 0],
+    "state_f": [1.4, 0.6, -0.9, 0, 0, 0]
   },
   "model": {
     "save": false,

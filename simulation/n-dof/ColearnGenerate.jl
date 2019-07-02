@@ -17,7 +17,7 @@ include("simulation.jl")
 
 
 function standardTimeOptimalSim(urdf, torque_bounds)
-  mechanism = RigidBodyDynamics.parse_urdf(urdf)
+  mechanism = RigidBodyDynamics.parse_urdf(urdf, gravity=[0.0, 0.0, 0.0])
   mech = ExtendedMechanism(mechanism, torque_bounds)
   timeOptimalForMech = makeTimeOptimalEom!(mech)
   function simulate(fullState0, tFinal)

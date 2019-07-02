@@ -10,12 +10,12 @@
     "mode": "time",
     "samples": 40000,
     "dt": 0.01,
-    "load": true,
+    "load": false,
     "split": 0.2
   },
   "model": {
-    "save": true,
-    "load": true,
+    "save": false,
+    "load": false,
     "nongan": {
       "structure": {
         "dof": 1,
@@ -26,7 +26,7 @@
         "maxStates": 3.1415
       },
       "training": {
-        "epochs": 50,
+        "epochs": 100,
         "batch_size": 256
       }
     },
@@ -42,7 +42,7 @@
       },
       "training": {
         "batch_size": 100,
-        "epochs": 30000,
+        "epochs": 40000,
         "d_steps": 1
       }
     }

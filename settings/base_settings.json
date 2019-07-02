@@ -22,7 +22,7 @@
     "planner": {
         "debug": false,
         "plotting": true,
-        "runs": 1,
+        "runs": 100,
         "goal_bias": 15,
         "threshold": 0.35,
         "goal_noise_var": 1.571,

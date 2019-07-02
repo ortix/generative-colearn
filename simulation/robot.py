@@ -10,10 +10,9 @@ class Robot:
         self.training_data_dir = None
         self.mode = mode
         self.dof = dof
-        t_bounds = np.tile([-np.pi / 2, np.pi / 2], (dof, 1))
-        o_bounds = np.tile([-1, 1], (dof, 1))
-        self.sampling_bounds = np.vstack([t_bounds, o_bounds])
-
+        state_ub = [0.5*np.pi, 0.35*np.pi, -0.25*np.pi, 1.0, 1.0, 1.0]
+        state_lb = [-0.5*np.pi, 0.15*np.pi, -0.5*np.pi, -1.0, -1.0, -1.0]
+        self.sampling_bounds = np.vstack([state_lb, state_ub]).T
         self.sim = self.init_julia()
         return None
 

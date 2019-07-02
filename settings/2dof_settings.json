@@ -11,12 +11,12 @@
     "plotting": true,
     "goal_noise": 0,
     "reachability": -1,
-    "state_i": [-0.785, 0, -0.785, 0],
-    "state_f": [0.785, 0, 0.785, 0]
+    "state_i": [-0.785, -0.785,  0,  0],
+    "state_f": [0.785, 0.785, 0, 0]
   },
   "model": {
     "save": true,
-    "load": true,
+    "load": false,
     "clean": false,
     "clsgan": {
       "structure": {
@@ -30,7 +30,7 @@
       },
       "training": {
         "batch_size": 256,
-        "epochs": 100000,
+        "epochs": 50000,
         "d_steps": 1
       }
     },
@@ -39,12 +39,12 @@
         "dof": 2,
         "layerSize": 256,
         "numLayers": 3,
-        "maxTime": 2.0,
-        "maxCost": 2.0,
-        "maxStates": 3.0
+        "maxTime": 1.2,
+        "maxCost": 1.2,
+        "maxStates": 4.0
       },
       "training": {
-        "epochs": 500,
+        "epochs": 50,
         "batch_size": 256
       }
     }
