@@ -14,12 +14,11 @@
     "goal_noise": 0,
     "reachability": -1,
     "state_i": [0, 0, -0.785, 0, -0.785, 0],
-    "state_f": [1.57, 0, 0.785, 0, 0.785, 0]
+    "state_f": [0, 0, 0, 0, 0, 0]
   },
   "model": {
     "save": false,
     "load": true,
-    "use": "clsgan",
     "clean": false,
     "nongan": {
       "structure": {
@@ -27,11 +26,12 @@
         "numLayers": 3,
         "maxTime": 1.0,
         "maxCost": 1.0,
-        "maxStates": [1.6, 0.8, 0.8, 1.0, 1.0, 1.0],
+        "maxStates": [1.6, 0.8, 0.8, 1.0, 1.0, 1.0]
+    },
+      "training": {
         "epochs": 64,
         "batch_size": 2048
-    },
-      "training": {}
+      }
     },
     "clsgan": {
       "structure": {

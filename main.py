@@ -18,7 +18,7 @@ parser.add_argument("--experiment", dest="experiment", default="pendulum",
 parser.add_argument("--visualize", dest="visualize", action="store_true",
                     help="Visualize the path in urdf-viz")
 parser.add_argument("--reach", dest="reachability", type=float,
-                    help="Reachability value. -1 for GAN discriminator")
+                    help="Reachability value. Has no effect when neural network is used")
 parser.add_argument("--runs", dest="runs", help="Amount of RRT runs", type=int)
 parser.add_argument('--learner', dest="model", help="Which learning algorithm to use",
                     choices=["clsgan", "knn", "nongan"], default="clsgan")
@@ -26,8 +26,8 @@ parser.add_argument('--folder', dest="folder", default="results",
                     help="Subfolder within tmp to store the results in. Usefull for separating experiments")
 parser.add_argument('--post-process', dest="post_process", action="store_true",
                     help="Post process the results from folder. Run the experiments first!")
-parser.add_argument('--gan-epochs', dest="gan_epochs", help="amount of epochs for GAN", type=int)
-parser.add_argument('--gan-batch-size', dest="gan_batch_size", help="batch size for GAN", type=int)
+parser.add_argument('--nn-epochs', dest="nn_epochs", help="amount of epochs for NN", type=int)
+parser.add_argument('--nn-batch-size', dest="nn_batch_size", help="batch size for NN", type=int)
 parser.add_argument('--data-file', dest="data_file", help="location of training data file")
 parser.add_argument('--train-only', dest="train_only", action="store_true", default=False)
 
@@ -36,12 +36,13 @@ cfg = settings(args.experiment)
 
 # Map runtime settings
 cfg.planner.runs = args.runs or cfg.planner.runs
-cfg.model.use = args.model # this is evil, you override the settings from the settings file when using default
+cfg.model.use = args.model 
 cfg.planner.reachability = args.reachability or cfg.planner.reachability
 cfg.model.data_file = args.data_file or None
 cfg.model.train_only = args.train_only or None
-cfg.model.clsgan.training.batch_size = args.gan_batch_size or cfg.model.clsgan.training.batch_size
-cfg.model.clsgan.training.epochs = args.gan_epochs or cfg.model.clsgan.training.epochs
+if(args.model != "knn"):
+    cfg.model[args.model].training.batch_size = args.nn_batch_size or cfg.model[args.model].training.batch_size 
+    cfg.model[args.model].training.epochs = args.nn_epochs or cfg.model[args.model].training.epochs
 
 # Post process the results and exit the main application
 if args.post_process:

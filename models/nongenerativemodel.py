@@ -2,6 +2,11 @@ import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
 
+from settings import settings
+
+cfg = settings()
+
+
 class NonGenerativeModel:
 
     def __init__(self, config=None):
@@ -23,7 +28,6 @@ class NonGenerativeModel:
     def save(self, fileName):
         self.learningModel.save_weights(fileName)
         
-
     def _setConfig(self, config):
         if config is None:
             self.dof = 3
@@ -42,9 +46,8 @@ class NonGenerativeModel:
             self.maxCost = config["maxCost"]
             self.maxStates = config["maxStates"]
             self.numLayers = config["numLayers"]
-            self.epochs = config["epochs"]
-            self.batch_size = config["batch_size"]
-
+            self.epochs = cfg.model.nongan.training.epochs
+            self.batch_size = cfg.model.nongan.training.batch_size
 
     def _makePredictionModel(self):
         initial_state = tf.keras.layers.Input(shape=(2*self.dof,))

@@ -255,7 +255,6 @@ class ModelAnalysis:
         dof = self.cfg.simulation.dof
         for i in tqdm(range(m * n)):
             state, _ = self.sim.simulate_steer(states[0][i, :], costates_hat[i, :])
-            print(state)
             theta_hat.append(state[:dof])
             omega_hat.append(state[dof:])
 
@@ -440,10 +439,10 @@ class ModelAnalysis:
 
     def run(self):
         self.generate_samples()
-        self.plot_costate_concentration()
-        self.plot_knn_spread()
-        # self.plot_costate_proximity()
-        self.plot_generated_distribution()
+        # self.plot_costate_concentration()
+        # self.plot_knn_spread()
+        self.plot_costate_proximity()
+        # self.plot_generated_distribution()
         self.plot_cost_qq()
         # self.plot_trajectories()
         # self.plot_costate_polar()
@@ -452,8 +451,8 @@ class ModelAnalysis:
         # Run last, slow
         # self.costate_error()
         # self.torque_switch_factor()
-        # self.error_rate()
-        self.node_validation(d_max=0.3)
+        self.error_rate()
+        # self.node_validation(d_max=0.3)
 
         plt.close("all")
         return None
