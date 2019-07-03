@@ -298,7 +298,7 @@ class RRT:
         colors = cmap(omegas_normal)
         Z = [[0, 0], [0, 0]]
         levels = np.linspace(0, vmax, 100)
-        if self._sim.dof > 1:
+        if self._sim.dof == 2:
             colorbar_ax = plt.contourf(Z, levels, cmap=cmap)
         plt.clf()
 
@@ -324,7 +324,7 @@ class RRT:
                         markersize=3,
                         markerfacecolor=(0, 0, 0, 0.5),
                     )
-                else:
+                elif self._sim.dof == 2:
                     plt.plot(
                         node.state[idx[0]],
                         node.state[idx[1]],
@@ -354,7 +354,7 @@ class RRT:
 
         plt.plot(self.start.state[idx[0]], self.start.state[idx[1]], "or")
         plt.plot(self.goal.state[idx[0]], self.goal.state[idx[1]], "og")
-        if self._sim.dof > 1:
+        if self._sim.dof == 2:
             plt.colorbar(colorbar_ax).set_label("Norm of omega")
         plt.axis(
             [

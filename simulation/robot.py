@@ -31,7 +31,7 @@ class Robot:
 
         if self.dof == 3:
             urdf = os.path.join(current_dir, "n-dof", "urdf", "kuka_iiwa", "model3DOF.urdf")
-            return Main.ColearnGenerate.standardTimeOptimalSim(urdf, [2.0, 2.0, 2.0])
+            return Main.ColearnGenerate.standardTimeOptimalSim(urdf, [2.0, 2.0, 1.0])
         else:
             print("WARNING: the URDF in simulation might not match the dynamics of the 2-dof manipulator used in training")
             urdf = os.path.join(current_dir, "n-dof", "urdf", "2dof.urdf")
@@ -65,7 +65,7 @@ class Robot:
 
     def simulate_steer(self, s0, u, dt=0.01):
         final_state, trajectory = self.simulate_steer_full(s0, u)
-        theta = final_state[: self.dof]
+        theta = final_state[:self.dof]
         omega = final_state[self.dof:(2*self.dof)]
         theta_traj = [state[:self.dof] for state in trajectory]
         omega_traj = [state[self.dof:2*self.dof] for state in trajectory]

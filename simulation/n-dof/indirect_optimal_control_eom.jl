@@ -57,14 +57,14 @@ gradTimeOptimalHamiltonian!(r, m, s) =  ForwardDiff.gradient!(r, x ->
 
 function optimalEOM(gradHamiltonian, mech, fullState)
   nablaH = gradHamiltonian(mech, fullState)
-  sDot = nablaH[mech.size+1:end]
-  cDot = -nablaH[1:mech.size]
+  sDot = nablaH[2*mech.size+1:end]
+  cDot = -nablaH[1:2*mech.size]
   return vcat(sDot,cDot)
 end
 
 function optimalEOM!(stateDot, gradHamiltonian!, mech, fullState)
   gradHamiltonian!(stateDot, mech, fullState)
-  stateDot[:] = vcat(stateDot[mech.size+1:end], -stateDot[1:mech.size])
+  stateDot[:] = vcat(stateDot[2*mech.size+1:end], -stateDot[1:2*mech.size])
   return stateDot
 end
 

@@ -9,7 +9,7 @@ state_ub = [0.5pi, 0.35pi, -0.25pi, 1.0, 1.0, 1.0]
 state_lb = [-0.5pi, 0.15pi, -0.5pi, -1.0, -1.0, -1.0]
 time_ub = 1.0
 time_lb = 0.01
-numSamples = 1000000
+numSamples = 100000
 
 min_time_step = 0.001
 

@@ -23,7 +23,7 @@ function standardTimeOptimalSim(urdf, torque_bounds)
   function simulate(fullState0, tFinal)
     tspan = (0.0, tFinal)
     prob = ODEProblem(timeOptimalForMech, fullState0, tspan)
-    sol = solve(prob, RK4(), dtmin=0.001, force_dtmin=true);
+    sol = solve(prob, RK4(), dtmin=0.001, force_dtmin=true)
     return (sol.t, sol.u)
   end
   return simulate
