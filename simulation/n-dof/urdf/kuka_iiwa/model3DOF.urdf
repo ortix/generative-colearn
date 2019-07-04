@@ -70,7 +70,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="src/kuka_iiwa/meshes/link_0.obj"/>
+        <mesh filename="kuka_iiwa/meshes/link_0.obj"/>
       </geometry>
       <material name="Grey"/>
     </visual>
@@ -99,14 +99,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="src/kuka_iiwa/meshes/link_1.obj"/>
+        <mesh filename="kuka_iiwa/meshes/link_1.obj"/>
       </geometry>
       <material name="Blue"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="src/kuka_iiwa/meshes/link_1.stl"/>
+        <mesh filename="kuka_iiwa/meshes/link_1.stl"/>
       </geometry>
     </collision>
   </link>
@@ -128,14 +128,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="src/kuka_iiwa/meshes/link_2.obj"/>
+        <mesh filename="kuka_iiwa/meshes/link_2.obj"/>
       </geometry>
       <material name="Blue"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="src/kuka_iiwa/meshes/link_2.stl"/>
+        <mesh filename="kuka_iiwa/meshes/link_2.stl"/>
       </geometry>
     </collision>
   </link>
@@ -157,14 +157,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="src/kuka_iiwa/meshes/link_3.obj"/>
+        <mesh filename="kuka_iiwa/meshes/link_3.obj"/>
       </geometry>
       <material name="Orange"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="src/kuka_iiwa/meshes/link_3.stl"/>
+        <mesh filename="kuka_iiwa/meshes/link_3.stl"/>
       </geometry>
     </collision>
   </link>
@@ -186,14 +186,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="src/kuka_iiwa/meshes/link_4.obj"/>
+        <mesh filename="kuka_iiwa/meshes/link_4.obj"/>
       </geometry>
       <material name="Blue"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="src/kuka_iiwa/meshes/link_4.stl"/>
+        <mesh filename="kuka_iiwa/meshes/link_4.stl"/>
       </geometry>
     </collision>
   </link>
@@ -215,14 +215,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="src/kuka_iiwa/meshes/link_5.obj"/>
+        <mesh filename="kuka_iiwa/meshes/link_5.obj"/>
       </geometry>
       <material name="Blue"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="src/kuka_iiwa/meshes/link_5.stl"/>
+        <mesh filename="kuka_iiwa/meshes/link_5.stl"/>
       </geometry>
     </collision>
   </link>
@@ -244,14 +244,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="src/kuka_iiwa/meshes/link_6.obj"/>
+        <mesh filename="kuka_iiwa/meshes/link_6.obj"/>
       </geometry>
       <material name="Orange"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="src/kuka_iiwa/meshes/link_6.stl"/>
+        <mesh filename="kuka_iiwa/meshes/link_6.stl"/>
       </geometry>
     </collision>
   </link>
@@ -273,14 +273,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="src/kuka_iiwa/meshes/link_7.obj"/>
+        <mesh filename="kuka_iiwa/meshes/link_7.obj"/>
       </geometry>
       <material name="Grey"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="src/kuka_iiwa/meshes/link_7.stl"/>
+        <mesh filename="kuka_iiwa/meshes/link_7.stl"/>
       </geometry>
     </collision>
   </link>
